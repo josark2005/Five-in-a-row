@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Gobang Algorithm Core Class
+* FIR Algorithm Core Class
 * @author   Jokin
 */
 
@@ -48,7 +48,7 @@ class fir {
     self::$chessboard['info']['version'] = self::VERSION;
     self::$chessboard['info']['data_version'] = self::DATA_VERSION;
     self::$chessboard['info']['next'] = 1;
-    self::$chessboard['info']['logs'][] = '0_Gobang Class for php created by Jokin';
+    self::$chessboard['info']['logs'][] = '0_FIR Class for php created by Jokin';
     self::$chessboard['info']['logs'][] = '0_chessboard initialized at ' . date('Y-m-d H:i:s');
     // 棋盘签名
     self::sign_chessboard(self::$chessboard);

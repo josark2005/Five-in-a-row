@@ -1,4 +1,4 @@
-# 五子棋 / Gobang PHP小游戏
+# 五子棋 / FIR PHP小游戏
 
 ## 特性 Features
 

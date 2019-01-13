@@ -44,7 +44,7 @@ $edge = fir::getEdge();
 <html lang="zh-CN" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Gobang</title>
+    <title>FIR</title>
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script type="text/javascript">
       function place(row, col) {
@@ -69,7 +69,7 @@ $edge = fir::getEdge();
   </head>
   <body>
     <div style="text-align:center;">
-      <h1>Gobang v0.0.1-alpha</h1>
+      <h1>Five-In-a-Row</h1>
       <p>
         <a href="./index.php?action=clear" target="_self">清空棋盘</a>
       </p>

@@ -22,7 +22,7 @@
 <?php
 
 /**
- * Gobang Update Library
+ * FIR Update Library
  * @author   Jokin
  */
 
