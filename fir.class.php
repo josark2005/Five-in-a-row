@@ -2,7 +2,6 @@
 
 /**
 * Gobang Algorithm Core Class
-* @version  1.0.0
 * @author   Jokin
 */
 
@@ -16,13 +15,21 @@
 // | 2_@相关指令
 // | e_获胜方代号
 // +----------------------------------------------------------------------
-// | save() 无法自动保存至其他文件名
-// +----------------------------------------------------------------------
 
-class gobang {
+class fir {
+
+  // 类库版本
+  const VERSION = '0.0.2-alpha';
+
+  // 数据结构版本
+  const DATA_VERSION = 'v2';
 
   // 棋盘数组存储函数
   public static $chessboard = array();
+
+  // 自动保存函数存储
+  public static $default_filename = 'chessboard.json';
+  public static $filename = null;
 
   /**
    * 初始化函数
@@ -37,8 +44,9 @@ class gobang {
         self::$chessboard['chessboard'][$i][$j] = -1;
       }
     }
-    // 0_ 系统标准文本信息
-    // 1_ 系统标准棋子信息
+    // 写入初始化信息
+    self::$chessboard['info']['version'] = self::VERSION;
+    self::$chessboard['info']['data_version'] = self::DATA_VERSION;
     self::$chessboard['info']['next'] = 1;
     self::$chessboard['info']['logs'][] = '0_Gobang Class for php created by Jokin';
     self::$chessboard['info']['logs'][] = '0_chessboard initialized at ' . date('Y-m-d H:i:s');
@@ -53,7 +61,17 @@ class gobang {
    * @param  bool   verify
    * @return bool
    */
-  public static function resume(string $filename = 'chessboard.json', bool $verify = true) : bool {
+  public static function resume(string $filename = null, bool $verify = true) : bool {
+    // 获取与修正filename
+    if ($filename === null) {
+      if (self::$filename === null) {
+        $filename = self::$default_filename;
+      } else {
+        $filename = self::$filename;
+      }
+    } else {
+      self::$filename = $filename;  // 提交全局
+    }
     if (!is_readable('./' . $filename)) {
       die('文件读取失败');
       return false; // 不可读取
@@ -62,6 +80,12 @@ class gobang {
     if (!$chessboard = json_decode($chessboard, true)) {
       die('文件数据不规范');
       return false; // 棋盘非json数据
+    }
+    // 验证版本
+    if (!isset($chessboard['info']['data_version'])) {
+      // 0.0.1-alpha 版本
+      echo '数据文件版本(v1)过低，建议使用 0.0.1-alpha 版本的类库进行操作或升级数据文件以避免不必要的错误。';
+      // die('数据文件版本(v1)过低，请使用 0.0.1-alpha 版本的类库进行操作。');
     }
     // 检查合法性
     if ($verify === true) {
@@ -73,12 +97,23 @@ class gobang {
     self::$chessboard = $chessboard;
     return true;
   }
+
   /**
    * 存储函数
    * @param  string   filename
    * @return bool
    */
-  public static function save(string $filename = 'chessboard.json', $data = null) : bool {
+  public static function save(string $filename = null, $data = null) : bool {
+    // 获取与修正filename
+    if ($filename === null) {
+      if (self::$filename === null) {
+        $filename = self::$default_filename;
+      } else {
+        $filename = self::$filename;
+      }
+    } else {
+      self::$filename = $filename;  // 提交全局
+    }
     // 签名
     self::sign_chessboard(self::$chessboard);
     if (is_writable("./")) {
