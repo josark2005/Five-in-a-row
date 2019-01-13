@@ -1,40 +1,51 @@
 <?php
 
 /**
- * Gobang Algorithm
+ * FIR Algorithm
  * @version  1.0.0
  * @author Jokin
  */
 
+// 版本限制
+if (version_compare(PHP_VERSION, '7.0.0', '<')) {
+  die('PHP版本至少需要7.0.0，当前版本'.PHP_VERSION);
+}
+
 // 设置时区
 date_default_timezone_set('PRC');
 
+// 数据文件
+const DATA = 'chessboard.json';
+
 // 载入核心类
-include './gobang.class.php';
-if (!is_file('./chessboard.json')) {
-  $chessbord = gobang::init();
-  gobang::save();
+include './fir.class.php';
+
+if (!is_file(DATA)) {
+  $chessbord = fir::init();
+  fir::save(DATA);
 } else {
-  $chessbord = gobang::resume('chessboard.json');
+  $chessbord = fir::resume(DATA, 0);
 }
 if (!$chessbord) die('载入棋盘失败！请检查棋盘文件是否可读、结构是否正常、签名是否正确。');
 if (isset($_GET['action'])) {
   if ($_GET['action'] === 'clear') {
-    unlink('./chessboard.json');
+    unlink(DATA);
     header('Location: index.php');
   }
 }
 if (isset($_GET['row']) && isset($_GET['col'])) {
-  gobang::autoPlace($_GET);
+  fir::autoPlace($_GET);
 }
 // 获取棋盘界
-$edge = gobang::getEdge();
+$edge = fir::getEdge();
 ?>
+
 <!DOCTYPE html>
 <html lang="zh-CN" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title>Gobang</title>
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script type="text/javascript">
       function place(row, col) {
         let form;
@@ -72,7 +83,7 @@ $edge = gobang::getEdge();
                   <?php echo $j; ?>
                 <?php else: ?>
                   <!-- <?php echo $i.'_'.$j; ?> -->
-                  <?php $status = gobang::getStatus($i, $j); ?>
+                  <?php $status = fir::getStatus($i, $j); ?>
                   <?php if($status === 0): echo '□'; ?>
                   <?php elseif($status === 1): ?>
                     <?php echo '■'; ?>
@@ -85,7 +96,7 @@ $edge = gobang::getEdge();
       </table>
       <!-- 信息 -->
       <p>
-        <?php $info = array_reverse(gobang::$chessboard['info']['logs']); ?>
+        <?php $info = array_reverse(fir::$chessboard['info']['logs']); ?>
         <?php foreach ($info as $key => $value) {
           echo $value.'<br />';
         } ?>
