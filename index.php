@@ -38,6 +38,7 @@ if (isset($_GET['row']) && isset($_GET['col'])) {
 }
 // 获取棋盘界
 $edge = fir::getEdge();
+// fir::aiPlace();
 ?>
 
 <!DOCTYPE html>
@@ -78,7 +79,7 @@ $edge = fir::getEdge();
           <tr>
             <td width='25px;'><?php echo $i===0?'':$i; ?></td>
             <?php for($j=1; $j<=$edge[1]; $j++): ?>
-              <td width='25px;' <?php if($i!==0): echo "id='{$i}_{$j}'"; endif; ?> onclick="javascript:place(<?php echo $i; ?>, <?php echo $j; ?>);">
+              <td width='25px;' <?php if($i!==0): echo "id='{$i}_{$j}'"; ?> onclick="javascript:place(<?php echo $i; ?>, <?php echo $j; ?>);<?php endif; ?>">
                 <?php if ($i === 0):?>
                   <?php echo $j; ?>
                 <?php else: ?>

@@ -20,7 +20,8 @@
 - 优化前端界面
 - 增加`websocket`支持
 
-## FINISHED TODO LIST
+## FINISHED
 
+- 修复`index.php`中第一行存在触发器的情况
 - 增加`save()`函数无参数情况下自动读取上一次的设置
 - 增加`save()`函数保存至其他文件名

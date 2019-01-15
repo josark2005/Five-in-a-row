@@ -316,6 +316,70 @@ class fir {
     // 错误返回-2
     return isset(self::$chessboard['chessboard'][$row][$col]) ? self::$chessboard['chessboard'][$row][$col] : -2;
   }
+
+  /**
+   * AI auto place
+   * @param  int  who
+   * @return int
+   */
+  public static function aiPlace(int $who = null) : int {
+    // 获取棋盘
+    $chessboard = self::$chessboard['chessboard'];
+    // 获取落子方
+    $who = $who === null ? $chessboard['info']['next'] : $who;
+    if ($who !== 0 && $who !== 1) die('AI自动落子失败：无效的落子方_'.$who);
+    $cWho = $who === 0 ? 1 : 0; // 对手
+    // 初始化权重（相等时进攻）
+    $aWeight = 0;  // 进攻权重
+    $dWeight = 0;  // 防守权重
+    // 综合数据
+    $integration = array();
+    // 获取棋盘大小
+    $edge = self::getEdge();
+    $max_row = $edge[0];
+    $max_col = $edge[1];
+    // 初始化记录器
+    $last = array(
+      'r' => -1,
+      'c' => -1,
+      'l' => -1,
+      'ri' => -1
+    );
+    // 穷举棋盘
+    for ($i=1; $i <= $row; $i++) {
+      for ($j=1; $j <= $col; $j++) {
+        // 横向搜索初始值
+        $r_i = 1;
+        $r_j = 1;
+        // 纵向搜索初始值
+        $c_i = 1;
+        $c_j = 1;
+        // 左斜向搜索初始值
+        $l_i = 1;
+        $l_j = 1;
+        // 右斜向搜索初始值
+        // 此处right中的r被占用，故用t
+        $t_i = 1;
+        $t_j = 1;
+        // 当前棋子
+        $chess = $chessboard[$i][$j];
+        // 横向搜索
+        if ($i === $r_i && $j === $r_j) {
+          if ($chess !== -1) {
+            for ($i=1; $i <= 4; $i++) {
+
+            }
+          }
+          $last = $chess;
+        }
+        // 纵向搜索
+        // 左斜向搜索
+        // 右斜向搜索
+      }
+    }
+    return 0;
+  }
+
 }
 
 ?>
